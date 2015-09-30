@@ -4,7 +4,7 @@ jdk:
   - openjdk7
 
 before_script:
-  - cd $TRAVIS_BUILD_DIR && git clone git@github.com:pingcap/tidb.git
+  - cd $TRAVIS_BUILD_DIR && git clone https://github.com/pingcap/tidb.git
   - cd $TRAVIS_BUILD_DIR/tidb && make parser && make server
   - cd $TRAVIS_BUILD_DIR/tidb/tidb-server && ./tidb-server &
   - cd $TRAVIS_BUILD_DIR
