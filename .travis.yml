@@ -11,7 +11,8 @@ before_script:
   - cd $TRAVIS_BUILD_DIR/go/src && mkdir -p github.com/pingcap
   - cd github.com/pingcap && git clone https://github.com/pingcap/tidb.git
   - cd tidb && make parser && make godep 
-  - cd tidb-server && godep go build && ./tidb-server &
+  - cd tidb-server && godep go build
+  - ./tidb-server -L fatal &
   - cd $TRAVIS_BUILD_DIR
 
 script:
