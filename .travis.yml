@@ -1,20 +1,26 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk8
-  - oraclejdk7
   - openjdk7
-  - openjdk6
+
+before_script:
+  - cd $TRAVIS_BUILD_DIR
+  - mkdir -p $TRAVIS_BUILD_DIR/go/src $TRAVIS_BUILD_DIR/go/pkg $TRAVIS_BUILD_DIR/go/bin
+  - export GOPATH=$TRAVIS_BUILD_DIR/go
+  - export PATH=$PATH:$GOPATH/bin
+  - cd $TRAVIS_BUILD_DIR/go/src && mkdir -p github.com/pingcap
+  - cd github.com/pingcap && git clone https://github.com/pingcap/tidb.git
+  - cd tidb && make parser && make godep
+  - git rev-parse HEAD
+  - cd tidb-server && godep go build
+  - ./tidb-server -L fatal &
+  - cd $TRAVIS_BUILD_DIR
+
+script:
+  - mvn clean test
+
 after_success:
-  - "mvn clean"
-  - "git clone -b travis `git config --get remote.origin.url` target/travis"
-  - "mvn deploy -Dmaven.test.skip=true --settings target/travis/settings.xml"
+  - echo "success"
 
-branches:
-  except:
-    - travis
-
-env:
-  global:
-    - secure: "jWLfOryabB89R5v7nD3V/8ke6+B26UW8E5wjwKj7dDhjfmGUg+KbOShqWrq4\nEAnyE4GltwDLxKErZ5aAPWcT47C3GJYocKtmTcec2sblqMdVVUd3udylrM1d\n66Yb0XZoqri9JJ9pb8ObDp5XRV+ZQ5xP0w1gboNY6SynJg/1FKk="
-    - secure: "UV14rAITDqou5jObPInlIS3IYdf45LihGal9/+C4TLyhXLaVktbT/arFAAIF\ndpv9OM+YgeA7ZeRZLJ8vbgipO+rxizPNL1DqK1rp9s5B2F2y9+ir47nTwayL\n0RN7TgdswjzZZKOukWF2CVK1hjk+n8iFkCrorU22trmXlHc0aoE="
+after_failure:
+  - echo "fail"
