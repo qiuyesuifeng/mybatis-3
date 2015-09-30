@@ -10,7 +10,8 @@ before_script:
   - export PATH=$PATH:$GOPATH/bin
   - cd $TRAVIS_BUILD_DIR/go/src && mkdir -p github.com/pingcap
   - cd github.com/pingcap && git clone https://github.com/pingcap/tidb.git
-  - cd tidb && make parser && make godep 
+  - cd tidb && make parser && make godep
+  - git rev-parse HEAD
   - cd tidb-server && godep go build
   - ./tidb-server -L fatal &
   - cd $TRAVIS_BUILD_DIR
