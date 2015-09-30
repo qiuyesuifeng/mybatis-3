@@ -1,12 +1,14 @@
-language: java go
+language: java
 sudo: false
 jdk:
   - openjdk7
 
 before_script:
+  - mkdir -p $TRAVIS_BUILD_DIR/go/src $TRAVIS_BUILD_DIR/go/pkg $TRAVIS_BUILD_DIR/go/bin
+  - export GOPATH=$TRAVIS_BUILD_DIR/go
+  - export PATH=$PATH:$GOPATH/bin
   - cd $TRAVIS_BUILD_DIR && git clone https://github.com/pingcap/tidb.git
-  - cd $TRAVIS_BUILD_DIR/tidb && make parser && make server
-  - cd $TRAVIS_BUILD_DIR/tidb/tidb-server && ./tidb-server &
+  - cd $TRAVIS_BUILD_DIR/tidb && make parser && make server && ./tidb-server/tidb-server &
   - cd $TRAVIS_BUILD_DIR
 
 script:
