@@ -19,8 +19,7 @@ before_script:
 script:
   - mvn clean test
 
-after_success:
-  - echo "success"
-
-after_failure:
-  - echo "fail"
+notifications:
+  slack: pingcap:AdrJBEngu8240ELVSTh3h1s2
+    on_success: always
+    on_failure: always
