@@ -21,5 +21,3 @@ script:
 
 notifications:
   slack: pingcap:AdrJBEngu8240ELVSTh3h1s2
-    on_success: always
-    on_failure: always
