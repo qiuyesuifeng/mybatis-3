@@ -57,7 +57,7 @@ public class NestedResultHandlerAssociationTest {
     session.close();
   }
 
-  @Test(groups={"tidb-todo"}, enabled = false) // Not support AddDate function.
+  @Test(groups={"tidb"})
   public void shouldHandleRowBounds() throws Exception {
     SqlSession sqlSession = sqlSessionFactory.openSession();
     final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,7 +79,7 @@ public class NestedResultHandlerAssociationTest {
     assertEquals("Bob3", accounts.get(1).getAccountName());
   }
 
-  @Test(groups={"tidb-todo"}, enabled = false) // Not support AddDate function.
+  @Test(groups={"tidb"}, enabled = false)
   public void shouldHandleStop() throws Exception {
     SqlSession sqlSession = sqlSessionFactory.openSession();
     final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
